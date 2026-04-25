@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Intelligent Learning Assistant</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body>
+
+<div class="app" id="app">
+
+  <!-- ── ONBOARDING ── -->
+  <div class="onboarding" id="onboarding">
+    <div class="onboarding-header">
+      <h1>What would you like to learn today?</h1>
+      <p>Your personal tutor adapts to your pace, style, and existing knowledge.</p>
+    </div>
+
+    <div>
+      <div class="field-label">Topic</div>
+      <input class="topic-input" id="topicInput"
+        placeholder="e.g. Quantum entanglement, Stoicism, Machine learning..." />
+      <div class="quick-topics">
+        <span class="quick-topic" data-topic="Blockchain &amp; Web3">Blockchain</span>
+        <span class="quick-topic" data-topic="Stoic philosophy">Stoicism</span>
+        <span class="quick-topic" data-topic="How neural networks learn">Neural networks</span>
+        <span class="quick-topic" data-topic="Quantum computing basics">Quantum computing</span>
+        <span class="quick-topic" data-topic="The French Revolution">French Revolution</span>
+        <span class="quick-topic" data-topic="Options trading fundamentals">Options trading</span>
+      </div>
+    </div>
+
+    <div>
+      <div class="field-label">Your current level</div>
+      <div class="level-grid">
+        <div class="level-card" data-level="beginner">
+          <div class="level-icon">🌱</div>
+          <div class="level-name">Beginner</div>
+          <div class="level-desc">Start from scratch</div>
+        </div>
+        <div class="level-card" data-level="intermediate">
+          <div class="level-icon">🌿</div>
+          <div class="level-name">Intermediate</div>
+          <div class="level-desc">Know the basics</div>
+        </div>
+        <div class="level-card" data-level="advanced">
+          <div class="level-icon">🌳</div>
+          <div class="level-name">Advanced</div>
+          <div class="level-desc">Deep dive</div>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <div class="field-label">Learning style</div>
+      <div class="style-grid">
+        <div class="style-card" data-style="analogies">
+          <div class="style-icon">🔗</div>
+          <div class="style-info">
+            <div class="style-name">Analogies &amp; stories</div>
+            <div class="style-hint">Relatable comparisons</div>
+          </div>
+        </div>
+        <div class="style-card" data-style="examples">
+          <div class="style-icon">🧪</div>
+          <div class="style-info">
+            <div class="style-name">Examples first</div>
+            <div class="style-hint">Concrete then theory</div>
+          </div>
+        </div>
+        <div class="style-card" data-style="structured">
+          <div class="style-icon">📐</div>
+          <div class="style-info">
+            <div class="style-name">Structured &amp; precise</div>
+            <div class="style-hint">Definitions &amp; frameworks</div>
+          </div>
+        </div>
+        <div class="style-card" data-style="socratic">
+          <div class="style-icon">🦉</div>
+          <div class="style-info">
+            <div class="style-name">Socratic dialogue</div>
+            <div class="style-hint">Questions &amp; discovery</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <button class="start-btn" id="startBtn" disabled>Start learning →</button>
+  </div>
+
+  <!-- ── SESSION ── -->
+  <div class="session" id="session" style="display:none;">
+    <div class="session-header">
+      <div>
+        <div class="session-topic" id="sessionTitle"></div>
+        <div class="session-tags" id="sessionTags"></div>
+      </div>
+      <button class="reset-btn" id="resetBtn">New topic</button>
+    </div>
+
+    <div class="progress-bar-wrap">
+      <div class="progress-bar-fill" id="progressBar" style="width:5%;"></div>
+    </div>
+
+    <div class="messages" id="messages"></div>
+
+    <div class="check-row" id="comprehensionRow" style="display:none;">
+      <button class="check-btn" data-check="got-it">✓ Got it, continue</button>
+      <button class="check-btn" data-check="slower">🐢 Slow down a bit</button>
+      <button class="check-btn" data-check="example">💡 Give me an example</button>
+      <button class="check-btn" data-check="quiz">🎯 Quiz me on this</button>
+    </div>
+
+    <div class="input-row">
+      <textarea
+        class="chat-input"
+        id="chatInput"
+        placeholder="Ask a question, or say 'next' to continue..."
+        rows="1"
+      ></textarea>
+      <button class="send-btn" id="sendBtn">Send</button>
+    </div>
+
+    <div class="nodes-section" id="nodesSection" style="display:none;">
+      <div class="nodes-label">Knowledge map</div>
+      <div class="nodes-list" id="nodesList"></div>
+    </div>
+  </div>
+
+</div>
+
+<script src="/js/app.js"></script>
+</body>
+</html>
