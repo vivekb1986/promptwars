@@ -7,43 +7,27 @@ router.post('/chat', async (req, res) => {
   const { messages, systemPrompt } = req.body;
 
   if (!messages || !Array.isArray(messages)) {
-    return res.status(400).json({ error: '`messages` array is required.' });
+    return res.status(400).json({ error: '\`messages\` array is required.' });
   }
 
-  const allMessage = messages[messages.length - 1];
-  const lastMessage = allMessage.content;
-
-
+  // Format messages for Gemini API
+  const contents = messages.map(msg => ({
+    role: msg.role === 'assistant' ? 'model' : 'user',
+    parts: [{ text: msg.content }]
+  }));
 
   try {
-    // Dynamically import node-fetch (ESM package)
-    const { default: fetch } = await import('node-fetch');
-
     const geminiRes = await fetch(GEMINI_API_URL, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'x-goog-api-key': 'AIzaSyC4kVS0XBs2OXTZYI2oP_raZDphAR4rtI4',
+        'x-goog-api-key': process.env.GEMINI_API_KEY,
       },
       body: JSON.stringify({
-        "contents": [
-          {
-            role: "user",
-            "parts": [
-              {
-                "text": systemPrompt
-              }
-            ]
-          },
-          {
-            role: "user",
-            "parts": [
-              {
-                "text": lastMessage
-              }
-            ]
-          }
-        ]
+        systemInstruction: {
+          parts: [{ text: systemPrompt || "" }]
+        },
+        contents: contents
       }),
     });
 
@@ -54,7 +38,7 @@ router.post('/chat', async (req, res) => {
       return res.status(geminiRes.status).json({ error: 'Gemini API error', detail: errBody });
     }
     const data = await geminiRes.json();
-    const text = data.candidates[0].content.parts[0].text || ""
+    const text = data.candidates?.[0]?.content?.parts?.[0]?.text || "";
 
     return res.json({ text });
   } catch (err) {
